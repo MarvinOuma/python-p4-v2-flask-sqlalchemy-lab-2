@@ -21,12 +21,16 @@ class Customer(db.Model, SerializerMixin):
         return f'<Customer {self.id}, {self.name}>'
 >>>>>>> REPLACE
 <<<<<<< SEARCH
-class Item(db.Model):
+class Item(db.Model, SerializerMixin):
     __tablename__ = 'items'
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String)
     price = db.Column(db.Float)
+
+    reviews = db.relationship('Review', back_populates='item')
+
+    serialize_rules = ('-reviews.item',)
 
     def __repr__(self):
         return f'<Item {self.id}, {self.name}, {self.price}>'
